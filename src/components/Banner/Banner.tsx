@@ -1,180 +1,173 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowUpRight, ChevronLeft, ChevronRight, ArrowDown, ShieldCheck, Sparkles, Smartphone } from 'lucide-react';
+import Link from 'next/link';
+import { Star, ChevronLeft, ChevronRight, ArrowUpRight, Smartphone, ShieldCheck } from 'lucide-react';
 
-const products = [
+const phones = [
   {
     id: 1,
     name: 'iPhone 15 Pro Max',
+    subtitle: '256GB - Natural Titanium',
     price: '$999',
-    tag: 'Trending',
-    image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800&auto=format&fit=crop',
+    badge: 'NEW',
+    mainImage: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1000&auto=format&fit=crop',
+    previewImage: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=400&auto=format&fit=crop',
+    tag: 'Verified Listing',
   },
   {
     id: 2,
-    name: 'Samsung Galaxy S24 Ultra',
+    name: 'Samsung S24 Ultra',
+    subtitle: '512GB - Titanium Gray',
     price: '$899',
-    tag: 'Hot Deal',
-    image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800&auto=format&fit=crop',
+    badge: 'HOT',
+    mainImage: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=1000&auto=format&fit=crop',
+    previewImage: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=400&auto=format&fit=crop',
+    tag: 'Official Warranty',
   },
 ];
 
-const Banner = () => {
+const ProfessionalBanner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
+    setCurrentIndex((prev) => (prev + 1) % phones.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
+    setCurrentIndex((prev) => (prev - 1 + phones.length) % phones.length);
   };
 
-  const currentProduct = products[currentIndex];
+  const activePhone = phones[currentIndex];
 
   return (
-    <section className="bg-slate-100 dark:bg-slate-950 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-      {/* 1440px Container Kept Intact */}
-      <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch relative">
+    <section className="bg-slate-100 dark:bg-[#121214] text-slate-900 dark:text-white py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+      {/* 1440px Container */}
+      <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
-        {/* Left Card: Info & CTA */}
-        <div className="lg:col-span-6 bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 flex flex-col justify-between shadow-sm border border-slate-200/60 dark:border-slate-800">
-          
+        {/* 1. Left Section: Heading & Social Proof */}
+        <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-8 py-2">
           <div className="space-y-6">
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/50 text-blue-600 dark:text-blue-400 text-xs font-semibold px-4 py-2 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-              <span>1,200+ Verified Phones Available</span>
+            {/* Top Pill */}
+            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-slate-800/80 border border-blue-200 dark:border-slate-700/60 text-blue-600 dark:text-blue-400 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span>
+              <span>Best Mobile Marketplace</span>
             </div>
-
-            {/* Title */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-[1.12] tracking-tight">
-              Your source for <br />
+            
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-slate-900 dark:text-white">
+              Find & sell <br />
+              your best phone <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                marketplace phones
+                easily.
               </span>
             </h1>
 
-            {/* Description */}
-            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-lg leading-relaxed">
-              Buy and sell pre-owned smartphones directly with trusted users. Safe, verified, and hassle-free marketplace listings.
+            <p className="text-slate-600 dark:text-slate-400 text-base max-w-md leading-relaxed font-normal">
+              We help you buy or sell pre-owned phones safely and quickly with 100% verified listings.
             </p>
-
-            {/* Primary Action Button */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <Link
-                href="/browse"
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base px-7 py-3.5 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 active:scale-95"
-              >
-                <span>Explore Products</span>
-                <ArrowUpRight className="w-5 h-5" />
-              </Link>
-            </div>
           </div>
 
-          {/* Bottom Section: Brands & Badges */}
-          <div className="mt-12 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-5">
-            {/* Brand Names */}
-            <div className="flex flex-wrap items-center gap-6 sm:gap-8 text-slate-400 dark:text-slate-500 font-bold text-sm uppercase tracking-wider">
-              <span className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">SAMSUNG</span>
-              <span className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Apple</span>
-              <span className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Google</span>
-              <span className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">OnePlus</span>
-              <span className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Xiaomi</span>
+          {/* Rating Stars & Trust Badge */}
+          <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800/80">
+            <div className="flex items-center gap-1.5 text-amber-500">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-amber-400 stroke-amber-400" />
+              ))}
             </div>
-
-            {/* Stat Pill Badges */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs font-medium px-3.5 py-1.5 rounded-xl">
-                <ShieldCheck className="w-4 h-4 text-blue-500" />
-                <span>Verified Listings</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-xs font-medium px-3.5 py-1.5 rounded-xl">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                <span>8,450+ Satisfied Clients</span>
-              </div>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-bold text-slate-900 dark:text-white">12k+</p>
+              <span className="text-sm text-slate-500 dark:text-slate-400">Satisfied Customer Reviews</span>
             </div>
           </div>
-
         </div>
 
-        {/* Right Card: Modern Showcase with Dynamic Blur & Lighting */}
-        <div className="lg:col-span-6 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-700 rounded-3xl p-6 sm:p-10 relative min-h-[440px] lg:min-h-[520px] flex items-center justify-center overflow-hidden shadow-xl">
+        {/* 2. Middle Section: Large Main Showcase Image */}
+        <div className="lg:col-span-5 relative h-[500px] lg:h-[540px] rounded-3xl overflow-hidden shadow-2xl group border border-slate-200 dark:border-slate-800/80 bg-slate-200 dark:bg-slate-900">
+          <Image
+            src={activePhone.mainImage}
+            alt={activePhone.name}
+            fill
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+
+          {/* View Catalog Bottom Bar Overlay */}
+          <Link
+            href="/browse"
+            className="absolute bottom-0 left-0 right-0 bg-white/20 dark:bg-white/10 backdrop-blur-md hover:bg-white/30 dark:hover:bg-white/20 text-white font-semibold py-4 px-6 flex items-center justify-between border-t border-white/20 transition-all duration-200 group/btn"
+          >
+            <span className="text-xs font-bold tracking-widest uppercase">VIEW FULL CATALOG</span>
+            <ArrowUpRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+          </Link>
+        </div>
+
+        {/* 3. Right Section: Dynamic Product Card & Navigation */}
+        <div className="lg:col-span-3 flex flex-col justify-between h-full space-y-6">
           
-          {/* Ambient Lighting Circles */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-indigo-300/30 rounded-full blur-2xl pointer-events-none"></div>
-
-          {/* Navigation Arrows */}
-          <button 
-            onClick={prevSlide}
-            aria-label="Previous image"
-            className="absolute left-4 sm:left-6 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white transition-all flex items-center justify-center border border-white/20 shadow-md active:scale-95"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
-          <button 
-            onClick={nextSlide}
-            aria-label="Next image"
-            className="absolute right-4 sm:right-6 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md text-white transition-all flex items-center justify-center border border-white/20 shadow-md active:scale-95"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* Center Glass Frame Showcase */}
-          <div className="relative w-full max-w-sm h-80 sm:h-96 rounded-3xl bg-white/10 backdrop-blur-lg border border-white/25 shadow-2xl p-3.5 flex items-center justify-center group transition-transform duration-500 hover:scale-[1.02]">
-            <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-inner">
-              <Image
-                src={currentProduct.image}
-                alt={currentProduct.name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                priority
-              />
-            </div>
-          </div>
-
-          {/* Floating Product Badge */}
-          <div className="absolute bottom-6 right-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl px-5 py-3 shadow-2xl z-20 border border-white/50 dark:border-slate-800 text-right">
-            <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-0.5">
-              {currentProduct.tag}
-            </div>
-            <h2 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-              {currentProduct.name}
-            </h2>
-            <div className="flex items-center justify-end gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 mt-1">
-              <span className="text-blue-600 dark:text-blue-400 font-extrabold">{currentProduct.price}</span>
-              <span>•</span>
-              <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                In Stock
+          {/* Detailed Product Card */}
+          <div className="bg-white dark:bg-[#1C1C1F] border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-xl space-y-4 transition-colors">
+            {/* Title & Badge */}
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">{activePhone.name}</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{activePhone.subtitle}</p>
+              </div>
+              <span className="bg-blue-600 text-white dark:bg-white dark:text-black text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wide">
+                {activePhone.badge}
               </span>
             </div>
-          </div>
 
-        </div>
-
-        {/* Center Circular Scroll Badge */}
-        <div className="hidden lg:flex absolute bottom-[-22px] left-1/2 -translate-x-1/2 z-30 items-center justify-center bg-slate-100 dark:bg-slate-950 p-2 rounded-full">
-          <div className="w-20 h-20 bg-white dark:bg-slate-900 rounded-full shadow-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center relative">
-            <ArrowDown className="w-5 h-5 text-slate-700 dark:text-slate-300 animate-bounce" />
-            <svg className="absolute inset-0 w-full h-full animate-spin-slow pointer-events-none" viewBox="0 0 100 100">
-              <path
-                id="circlePath"
-                d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
-                fill="none"
+            {/* Preview Image Frame */}
+            <div className="relative w-full h-44 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <Image
+                src={activePhone.previewImage}
+                alt={activePhone.name}
+                fill
+                className="object-cover"
               />
-              <text className="text-[9px] fill-slate-500 dark:fill-slate-400 font-semibold tracking-widest uppercase">
-                <textPath href="#circlePath">
-                  Learn more • Learn more •
-                </textPath>
-              </text>
-            </svg>
+            </div>
+
+            {/* Price & Status */}
+            <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                <span>{activePhone.tag}</span>
+              </div>
+              <span className="text-2xl font-black text-slate-900 dark:text-white">{activePhone.price}</span>
+            </div>
+
+            {/* Action Button */}
+            <button className="w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs font-extrabold py-3.5 px-4 rounded-2xl transition-all uppercase tracking-wider shadow-md shadow-blue-500/20">
+              MAKE AN OFFER
+            </button>
           </div>
+
+          {/* Slider Pagination Controls */}
+          <div className="flex items-center justify-between px-1">
+            <span className="text-base font-extrabold tracking-widest text-slate-900 dark:text-white">
+              0{currentIndex + 1}<span className="text-xs text-slate-400 dark:text-slate-600">/0{phones.length}</span>
+            </span>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevSlide}
+                aria-label="Previous Slide"
+                className="w-11 h-11 rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#1C1C1F] hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-800 dark:text-white transition-all shadow-sm active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={nextSlide}
+                aria-label="Next Slide"
+                className="w-11 h-11 rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#1C1C1F] hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-800 dark:text-white transition-all shadow-sm active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -182,4 +175,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default ProfessionalBanner;
