@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Smartphone, 
   Send, 
   ArrowUpRight, 
   Check, 
@@ -109,20 +108,35 @@ const Footer = () => {
           
           {/* Brand Info & Social Links */}
           <div className="lg:col-span-4 space-y-5">
-            <Link href="/" className="inline-flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                <Smartphone className="w-6 h-6" />
+            {/* Matching Navbar's Premium RM Logo */}
+            <Link href="/" className="inline-flex items-center space-x-3.5 group">
+              <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-all duration-300">
+                <div className="w-full h-full bg-slate-950/90 backdrop-blur-xl rounded-[15px] flex items-center justify-center overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 via-transparent to-cyan-400/20 opacity-60"></div>
+                  <div className="relative flex items-center gap-0.5">
+                    <span className="text-sm font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-blue-400">
+                      RM
+                    </span>
+                    <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse shadow-sm shadow-cyan-400"></div>
+                  </div>
+                </div>
               </div>
-              <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                ReMobile
-              </span>
+              
+              <div className="flex flex-col">
+                <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
+                  Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400">Mobile</span>
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.2em] text-slate-400 dark:text-slate-500 uppercase mt-1">
+                  Verified Phones
+                </span>
+              </div>
             </Link>
 
             <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm">
               The modern marketplace to buy, sell, and trade verified smartphones with complete peace of mind.
             </p>
 
-            {/* Inline SVG Social Media Badges (No Import Error) */}
+            {/* Social Media Links */}
             <div className="flex flex-wrap gap-2 pt-1">
               <a
                 href="https://instagram.com"
@@ -223,7 +237,7 @@ const Footer = () => {
               <button
                 type="submit"
                 disabled={loading || subscribed}
-                className="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-80"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 active:scale-[0.98] text-white text-xs font-semibold py-2 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 disabled:opacity-80"
               >
                 {loading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
