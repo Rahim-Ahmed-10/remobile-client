@@ -13,7 +13,11 @@ import {
   User, 
   LayoutDashboard, 
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Home as HomeIcon,
+  Smartphone,
+  Info,
+  PhoneCall
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -44,10 +48,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Browse Phones', href: '/browse' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Home', href: '/', icon: HomeIcon },
+    { name: 'Browse Phones', href: '/browse', icon: Smartphone },
+    { name: 'About Us', href: '/about', icon: Info },
+    { name: 'Contact', href: '/contact', icon: PhoneCall },
   ];
 
   return (
@@ -88,18 +92,20 @@ const Navbar = () => {
           <div className="hidden md:flex items-center bg-slate-100/80 dark:bg-slate-900/80 p-1.5 rounded-full border border-slate-200/80 dark:border-slate-800/80 shadow-inner">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+              const IconComponent = link.icon;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 flex items-center gap-1.5 ${
+                  className={`text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 flex items-center gap-2 ${
                     isActive
                       ? 'bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
+                  <IconComponent className="w-4 h-4" />
                   <span>{link.name}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 ml-0.5"></span>}
                 </Link>
               );
             })}
@@ -119,9 +125,9 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* Authenticated User Menu */}
+            {/* Authenticated User Menu (Desktop Only) */}
             {isLoggedIn ? (
-              <div className="relative">
+              <div className="relative hidden md:block">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                   className="flex items-center gap-2 p-1.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 transition-all bg-slate-50 dark:bg-slate-900"
@@ -129,7 +135,7 @@ const Navbar = () => {
                   <img
                     src="https://github.com/Rahim-Ahmed-10.png"
                     alt="Rahim Ahmed Profile"
-                    className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/30"
+                    className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500/30 flex-shrink-0"
                   />
                   <span className="hidden lg:inline text-xs font-semibold text-slate-700 dark:text-slate-200 pr-1">
                     Rahim
@@ -200,7 +206,10 @@ const Navbar = () => {
 
             {/* Mobile Hamburger Button */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                setProfileDropdownOpen(false);
+              }}
               className="md:hidden p-2.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-2xl transition"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -212,26 +221,101 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-4 pb-6 space-y-3">
+        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-4 pb-6 space-y-4 shadow-xl">
+          
+          {/* Mobile User Profile Section (Top of Menu) */}
+          {isLoggedIn && (
+            <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center gap-3 border border-slate-200/60 dark:border-slate-800/60">
+              <img
+                src="https://github.com/Rahim-Ahmed-10.png"
+                alt="Mohammad Rahim Miah"
+                className="w-11 h-11 rounded-full object-cover ring-2 ring-blue-500/30 flex-shrink-0"
+              />
+              <div className="overflow-hidden">
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">Mohammad Rahim Miah</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">rahim.dev@example.com</p>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation Links with Icons */}
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+              const IconComponent = link.icon;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                  className={`px-4 py-3 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between ${
                     isActive
                       ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900'
+                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
                   }`}
                 >
-                  {link.name}
+                  <div className="flex items-center gap-3">
+                    <IconComponent className={`w-4 h-4 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500'}`} />
+                    <span>{link.name}</span>
+                  </div>
+                  {isActive && <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400"></span>}
                 </Link>
               );
             })}
           </div>
+
+          {/* Mobile User Options & Logout */}
+          {isLoggedIn ? (
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+              >
+                <LayoutDashboard className="w-4 h-4 text-blue-500" />
+                <span>Dashboard</span>
+              </Link>
+
+              <Link
+                href="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900"
+              >
+                <User className="w-4 h-4 text-emerald-500" />
+                <span>My Profile</span>
+              </Link>
+
+              <button
+                onClick={() => {
+                  setIsLoggedIn(false);
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Log Out</span>
+              </button>
+            </div>
+          ) : (
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2">
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-900 py-3 rounded-xl"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Log In</span>
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 py-3 rounded-xl shadow-md"
+              >
+                <UserPlus className="w-4 h-4" />
+                <span>Register</span>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </nav>

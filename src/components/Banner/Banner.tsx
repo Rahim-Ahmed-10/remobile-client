@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, ChevronLeft, ChevronRight, ArrowUpRight, Smartphone, ShieldCheck } from 'lucide-react';
+import { Star, ArrowUpRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const phones = [
   {
@@ -11,161 +12,193 @@ const phones = [
     name: 'iPhone 15 Pro Max',
     subtitle: '256GB - Natural Titanium',
     price: '$999',
-    badge: 'NEW',
+    badge: 'NEW ARRIVAL',
     mainImage: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=1000&auto=format&fit=crop',
-    previewImage: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=400&auto=format&fit=crop',
-    tag: 'Verified Listing',
+    glowColor: 'from-blue-600/40 via-cyan-500/20 to-transparent',
+    tag: '100% Verified',
   },
   {
     id: 2,
     name: 'Samsung S24 Ultra',
     subtitle: '512GB - Titanium Gray',
     price: '$899',
-    badge: 'HOT',
+    badge: 'BEST SELLER',
     mainImage: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=1000&auto=format&fit=crop',
-    previewImage: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=400&auto=format&fit=crop',
+    glowColor: 'from-purple-600/40 via-pink-500/20 to-transparent',
     tag: 'Official Warranty',
+  },
+  {
+    id: 3,
+    name: 'Google Pixel 8 Pro',
+    subtitle: '128GB - Bay Blue',
+    price: '$799',
+    badge: 'SPECIAL DEAL',
+    mainImage: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=1000&auto=format&fit=crop',
+    glowColor: 'from-emerald-500/40 via-teal-500/20 to-transparent',
+    tag: 'Strictly Tested',
   },
 ];
 
 const ProfessionalBanner = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % phones.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + phones.length) % phones.length);
-  };
+  // Auto-play feature
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % phones.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   const activePhone = phones[currentIndex];
 
   return (
-    <section className="bg-slate-100 dark:bg-[#121214] text-slate-900 dark:text-white py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-      {/* 1440px Container */}
-      <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <section className="relative bg-slate-50 text-slate-900 dark:bg-[#030509] dark:text-white py-16 px-4 sm:px-6 lg:px-12 flex items-center overflow-hidden min-h-[600px] transition-colors duration-300">
+      
+      {/* Dynamic Dark & Light Theme Background Glow */}
+      <div className={`absolute top-1/2 left-3/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br ${activePhone.glowColor} rounded-full blur-[160px] pointer-events-none transition-all duration-1000 opacity-70`} />
+      
+      {/* Top Subtle Light Ray */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 dark:via-cyan-500/30 to-transparent" />
+
+      <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center relative z-10">
         
-        {/* 1. Left Section: Heading & Social Proof */}
-        <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-8 py-2">
-          <div className="space-y-6">
-            {/* Top Pill */}
-            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-slate-800/80 border border-blue-200 dark:border-slate-700/60 text-blue-600 dark:text-blue-400 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span>
-              <span>Best Mobile Marketplace</span>
+        {/* Left Content Area */}
+        <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 text-blue-600 dark:text-cyan-400 text-xs font-semibold px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-sm dark:shadow-[0_0_15px_rgba(34,211,238,0.15)] w-fit backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400 animate-pulse" />
+              <span>ReMobile Verified Ecosystem</span>
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-slate-900 dark:text-white">
-              Find & sell <br />
-              your best phone <br />
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                easily.
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-slate-900 dark:text-white">
+              Discover & trade <br />
+              smartphones with <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-400">
+                total clarity.
               </span>
             </h1>
 
-            <p className="text-slate-600 dark:text-slate-400 text-base max-w-md leading-relaxed font-normal">
-              We help you buy or sell pre-owned phones safely and quickly with 100% verified listings.
+            <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-md leading-relaxed font-normal">
+              Experience the safest marketplace for pre-owned and new flagship devices backed by rigorous multi-point testing.
             </p>
           </div>
 
-          {/* Rating Stars & Trust Badge */}
-          <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800/80">
-            <div className="flex items-center gap-1.5 text-amber-500">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-amber-400 stroke-amber-400" />
-              ))}
+          <div className="flex items-center gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/80 max-w-md">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1 text-amber-400 mb-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-amber-400" />
+                ))}
+              </div>
+              <p className="text-sm font-bold text-slate-900 dark:text-white">4.9 / 5.0 Rating</p>
             </div>
-            <div className="flex items-center gap-2">
-              <p className="text-lg font-bold text-slate-900 dark:text-white">12k+</p>
-              <span className="text-sm text-slate-500 dark:text-slate-400">Satisfied Customer Reviews</span>
-            </div>
+            <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800" />
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Over 12k+ Verified Customers</p>
           </div>
         </div>
 
-        {/* 2. Middle Section: Large Main Showcase Image */}
-        <div className="lg:col-span-5 relative h-[500px] lg:h-[540px] rounded-3xl overflow-hidden shadow-2xl group border border-slate-200 dark:border-slate-800/80 bg-slate-200 dark:bg-slate-900">
-          <Image
-            src={activePhone.mainImage}
-            alt={activePhone.name}
-            fill
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-
-          {/* View Catalog Bottom Bar Overlay */}
-          <Link
-            href="/browse"
-            className="absolute bottom-0 left-0 right-0 bg-white/20 dark:bg-white/10 backdrop-blur-md hover:bg-white/30 dark:hover:bg-white/20 text-white font-semibold py-4 px-6 flex items-center justify-between border-t border-white/20 transition-all duration-200 group/btn"
-          >
-            <span className="text-xs font-bold tracking-widest uppercase">VIEW FULL CATALOG</span>
-            <ArrowUpRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-          </Link>
-        </div>
-
-        {/* 3. Right Section: Dynamic Product Card & Navigation */}
-        <div className="lg:col-span-3 flex flex-col justify-between h-full space-y-6">
+        {/* Right Slider Area */}
+        <div className="lg:col-span-7 flex flex-col items-center justify-center">
           
-          {/* Detailed Product Card */}
-          <div className="bg-white dark:bg-[#1C1C1F] border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-xl space-y-4 transition-colors">
-            {/* Title & Badge */}
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">{activePhone.name}</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{activePhone.subtitle}</p>
-              </div>
-              <span className="bg-blue-600 text-white dark:bg-white dark:text-black text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wide">
-                {activePhone.badge}
-              </span>
-            </div>
+          <div className="relative w-full h-[440px] sm:h-[480px] flex items-center justify-center perspective-[1400px]">
+            {phones.map((phone, index) => {
+              const offset = (index - currentIndex + phones.length) % phones.length;
+              
+              let zIndex = 0;
+              let xOffset = '0%';
+              let scale = 0.75;
+              let rotateY = 0;
+              let opacity = 0;
+              let filter = 'blur(6px)';
 
-            {/* Preview Image Frame */}
-            <div className="relative w-full h-44 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-              <Image
-                src={activePhone.previewImage}
-                alt={activePhone.name}
-                fill
-                className="object-cover"
-              />
-            </div>
+              if (offset === 0) {
+                zIndex = 30;
+                xOffset = '0%';
+                scale = 1;
+                rotateY = 0;
+                opacity = 1;
+                filter = 'blur(0px)';
+              } else if (offset === 1) {
+                zIndex = 20;
+                xOffset = '54%';
+                scale = 0.82;
+                rotateY = -28;
+                opacity = 0.55;
+                filter = 'blur(2px)';
+              } else if (offset === phones.length - 1) {
+                zIndex = 20;
+                xOffset = '-54%';
+                scale = 0.82;
+                rotateY = 28;
+                opacity = 0.55;
+                filter = 'blur(2px)';
+              }
 
-            {/* Price & Status */}
-            <div className="flex items-center justify-between pt-1">
-              <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                <span>{activePhone.tag}</span>
-              </div>
-              <span className="text-2xl font-black text-slate-900 dark:text-white">{activePhone.price}</span>
-            </div>
+              return (
+                <motion.div
+                  key={phone.id}
+                  initial={false}
+                  animate={{
+                    x: xOffset,
+                    scale: scale,
+                    rotateY: rotateY,
+                    opacity: opacity,
+                  }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ zIndex, filter }}
+                  className="absolute w-[260px] sm:w-[300px] aspect-[9/17] rounded-[28px] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-950 cursor-pointer group transition-colors"
+                  onClick={() => setCurrentIndex(index)}
+                >
+                  <Image
+                    src={phone.mainImage}
+                    alt={phone.name}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    priority
+                  />
+                  
+                  {/* Glassmorphic Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 dark:from-slate-950 via-slate-900/30 dark:via-slate-950/40 to-slate-900/10 dark:to-slate-950/10 flex flex-col justify-between p-5">
+                    
+                    {/* Top Badges */}
+                    <div className="flex justify-between items-center">
+                      <span className="bg-blue-600 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                        {phone.badge}
+                      </span>
+                      <div className="flex items-center gap-1 text-[10px] text-emerald-400 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-slate-800">
+                        <ShieldCheck className="w-3 h-3" />
+                        <span className="font-semibold">{phone.tag}</span>
+                      </div>
+                    </div>
 
-            {/* Action Button */}
-            <button className="w-full bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs font-extrabold py-3.5 px-4 rounded-2xl transition-all uppercase tracking-wider shadow-md shadow-blue-500/20">
-              MAKE AN OFFER
-            </button>
-          </div>
+                    {/* Bottom Info */}
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-lg font-bold text-white tracking-tight leading-tight">{phone.name}</h3>
+                        <p className="text-[11px] text-slate-300 font-medium mt-0.5">{phone.subtitle}</p>
+                      </div>
 
-          {/* Slider Pagination Controls */}
-          <div className="flex items-center justify-between px-1">
-            <span className="text-base font-extrabold tracking-widest text-slate-900 dark:text-white">
-              0{currentIndex + 1}<span className="text-xs text-slate-400 dark:text-slate-600">/0{phones.length}</span>
-            </span>
+                      <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] uppercase tracking-wider text-slate-300 font-bold">Starting at</span>
+                          <span className="text-xl font-black text-white">{phone.price}</span>
+                        </div>
+                        <Link
+                          href="/browse"
+                          className="bg-white/20 hover:bg-white/30 active:scale-95 backdrop-blur-md text-white text-xs font-semibold px-3.5 py-2 rounded-lg flex items-center gap-1 transition-all border border-white/20 shadow-lg"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span>View Deal</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={prevSlide}
-                aria-label="Previous Slide"
-                className="w-11 h-11 rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#1C1C1F] hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-800 dark:text-white transition-all shadow-sm active:scale-95"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextSlide}
-                aria-label="Next Slide"
-                className="w-11 h-11 rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#1C1C1F] hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-800 dark:text-white transition-all shadow-sm active:scale-95"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
