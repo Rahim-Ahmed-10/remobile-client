@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sun, Moon, ArrowRight, Smartphone, Menu, X } from 'lucide-react';
+import { Sun, Moon, Smartphone, Menu, X, LogIn, UserPlus } from 'lucide-react';
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -51,7 +51,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Floating Pill Navigation */}
+          {/* Floating Pill Navigation (Desktop) */}
           <div className="hidden md:flex items-center bg-slate-100/80 dark:bg-slate-900/80 p-1.5 rounded-full border border-slate-200/80 dark:border-slate-800/80 shadow-inner">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -73,7 +73,8 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Theme Toggle */}
             {mounted && (
               <button
                 onClick={toggleTheme}
@@ -84,14 +85,25 @@ const Navbar = () => {
               </button>
             )}
 
+            {/* Login Link (Desktop) */}
             <Link
-              href="/sell"
-              className="hidden sm:inline-flex bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-lg shadow-blue-500/20 transition-all items-center gap-2 group"
+              href="/login"
+              className="hidden lg:inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 px-4 py-2 rounded-full transition-colors"
             >
-              <span>+ Sell Phone</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <LogIn className="w-4 h-4" />
+              <span>Log In</span>
             </Link>
 
+            {/* Register Button (Desktop) */}
+            <Link
+              href="/register"
+              className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold bg-blue-600 hover:bg-blue-700 active:scale-95 text-white px-5 py-2.5 rounded-full shadow-lg shadow-blue-500/20 transition-all"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Register</span>
+            </Link>
+
+            {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2.5 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-2xl transition"
@@ -102,6 +114,51 @@ const Navbar = () => {
 
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-4 pb-6 space-y-3">
+          <div className="flex flex-col space-y-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800/80 flex flex-col gap-2">
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-900"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Log In</span>
+            </Link>
+
+            <Link
+              href="/register"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-md shadow-blue-500/20"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Register</span>
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
